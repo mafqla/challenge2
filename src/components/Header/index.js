@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Menu, Dropdown, message } from 'antd';
-import { CaretDownOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom'
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react'
+import {Menu, Dropdown, message} from 'antd';
+import {CaretDownOutlined} from '@ant-design/icons';
+import {useLocation, useNavigate} from 'react-router-dom'
+import {connect} from 'react-redux';
 import defaultAvatar from '@/assets/defaultAvatar.jpg'
 
 function Header(props) {
     const navigate = useNavigate()
     const [avatar, setAvatar] = useState(defaultAvatar)
     const [username, setUsername] = useState("游客")
+    const location = useLocation()
+    const [defaultKey, setDefaultKey] = useState('')
 
     /**
      * 模拟componentDidMount
@@ -21,7 +23,7 @@ function Header(props) {
             setUsername(username1)
         }
         if (avatar1) {
-            setAvatar( avatar1)
+            setAvatar(avatar1)
         }
     }, [props.mykey])
 
@@ -35,21 +37,45 @@ function Header(props) {
     const menu = (
         <Menu>
             <Menu.Item key={1}>修改资料</Menu.Item>
-            <Menu.Divider />
+            <Menu.Divider/>
             <Menu.Item key={2} onClick={logout}>退出登录</Menu.Item>
         </Menu>
     );
 
+
+    // 一般加个空数组就是为了模仿componentDidMounted
+    useEffect(() => {
+        let path = location.pathname;
+        let key = path.split('/')[1];
+        setDefaultKey(key)
+    }, [location.pathname])
+
+    const handleClick = e => {
+        navigate('/' + e.key)
+        setDefaultKey(e.key)
+    };
+
     return (
         <header>
-            <h3>title</h3>
+            <Menu
+                onClick={handleClick}
+                className="left"
+                selectedKeys={[defaultKey]}
+                mode="horizontal"
+                theme="light"
+            >
+                <Menu.Item key="rcaf"> RCA-Facts</Menu.Item>
+                <Menu.Item key="rca"> RCA</Menu.Item>
+                <Menu.Item key="eda">EDA</Menu.Item>
+                <Menu.Item key="summary"> SUMMARY</Menu.Item>
+            </Menu>
             <div className="right">
                 <Dropdown overlay={menu}>
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                        <img src={avatar} className="avatar" alt="" />
+                        <img src={avatar} className="avatar" alt=""/>
                         <span>{username}</span>
-                        <CaretDownOutlined />
+                        <CaretDownOutlined/>
                     </a>
                 </Dropdown>
             </div>

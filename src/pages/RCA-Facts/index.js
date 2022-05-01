@@ -1,6 +1,6 @@
 import './index.scss'
 
-const Home = () => {
+const RcaF = () => {
 
   return (
     <div>
@@ -8,4 +8,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default RcaF

@@ -4,7 +4,10 @@ import Login from "@/pages/Login";
 import App from "@/App";
 import Register from "@/pages/Register";
 import Error from "@/pages/Error";
-import Home from "@/pages/Home";
+import Eda from "@/pages/EDA";
+import RcaF from "@/pages/RCA-Facts";
+import Rca from "@/pages/RCA";
+import Summary from "@/pages/SUMMARY";
 
 /**
  * History模式 -- BrowserRouter
@@ -15,7 +18,10 @@ const BaseRouter = () => (
     <Router>
         <Routes>
             <Route path='/' element={<App/>}>
-                <Route path='/home' element={<Home/>}/>
+                <Route path='/rcaf' element={<RcaF/>}/>
+                <Route path='/rca' element={<Rca/>}/>
+                <Route path='/eda' element={<Eda/>}/>
+                <Route path='/summary' element={<Summary/>}/>
             </Route>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
